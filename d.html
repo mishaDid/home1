@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Блогер VeTaL | Гра та життя</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        /* Обновленные стили для футера */
+        footer {
+            background-color: #333;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            font-size: 14px;
+        }
+
+        /* Стили для секції "Гра", чтобы она была компактной */
+        #game {
+            display: none;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        #game h2 {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        #game button {
+            margin: 5px 0;
+            padding: 8px 16px;
+            font-size: 14px;
+        }
+
+        #cards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: center;
+            margin: 10px 0;
+        }
+
+        #cards-container .card {
+            width: 100px;
+            height: 100px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            cursor: pointer;
+            border-radius: 8px;
+        }
+
+        #cards-container .card.green {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        #cards-container .card.red {
+            background-color: #f44336;
+            color: white;
+        }
+
+        .modal-content {
+            color: rgb(255, 255, 255); /* Для чорного тексту в модальних вікнах */
+        }
+
+        #timer {
+            color: red;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>Блогер VeTaL</h1>
+    <p>Слідкуйте за життям та проектами блогера VeTaL!</p>
+</header>
+
+<nav>
+    <ul>
+        <li><a href="javascript:void(0)" onclick="showSection('about')">Про блогера</a></li>
+        <li><a href="javascript:void(0)" onclick="showSection('videos')">Відео</a></li>
+        <li><a href="javascript:void(0)" onclick="showSection('game')">Гра</a></li>
+        <li><a href="javascript:void(0)" onclick="showSection('donate')">Донат</a></li>
+        <li><a href="javascript:void(0)" onclick="showSection('contact')">Контакти</a></li>
+    </ul>
+</nav>
+
+<main>
+    <!-- Секція про блогера -->
+    <section id="about" class="info-section">
+        <h2>Про блогера</h2>
+        <p>VeTaL — блогер, який створює цікаві відео та ділиться своїм життям з аудиторією. Слідкуйте за його пригодами та новими проектами! А ще це перший блогер на якому аудіторія може заробити швидко та просто, ігрову валюту</p>
+    </section>
+
+    <!-- Секція відео -->
+    <section id="videos" class="info-section">
+        <h2>Відео</h2>
+        <p>Тут ви можете переглянути відео з моментами гри та перейти до тік току VeTaL.</p>
+        <li>тік-ток аканут <a href="https://www.tiktok.com/@vetal_gtaukraine?_t=8rtIygpvT9z&_r=1" target="_blank">@ТИК-ТОК</a>.</li>
+        <li>Популярне відео <a href="https://vt.tiktok.com/ZSjthp9Hk/" target="_blank">@ВІДЕО</a>.</li>
+    </section>
+
+    <!-- Секція гри -->
+    <section id="game" class="info-section" style="display: none;">
+        <h2>Гра "Мінувальник"</h2>
+        <p>Натисніть на кнопку нижче, щоб почати гру:</p>
+        <button id="start-button">Почати гру</button>
+        <button id="end-button" style="display: none;">Закінчити гру</button>
+        <div id="cards-container"></div>
+        <h3>Ваші очки: <span id="score">0</span> грн</h3>
+        <p id="game-status"></p>
+        <button id="rules-button">Правила гри</button>
+        <button id="withdraw-button">Вивести гроші</button>
+        <p id="timer"></p>
+    </section>
+
+    <!-- Секція донатів -->
+    <section id="donate" class="info-section" style="display: none;">
+        <h2>Донат</h2>
+        <p>Підтримайте блогера VeTaL донатами для розвитку проектів та створення нових ігор.</p>
+        <p>МоноБанк: 4441111041510300</p>
+        <p>ПриватБанк: 5168752025246888</p>
+        <p>дуже дякую!!! кожен донат покажемо в своємо ТГК.</p>
+        
+    </section>
+
+    <!-- Секція контактів -->
+    <section id="contact" class="info-section" style="display: none;">
+        <h2>Контакти</h2>
+        <p>Напишіть VeTaL за наступними контактами:</p>
+        <li>Напишіть у Telegram на <a href="https://t.me/VeTaL_TT24" target="_blank">@блогер</a>.</li>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2024 VeTaL. Права захищені.</p>
+</footer>
+
+<!-- Модальне вікно для виведення грошей -->
+<div id="withdraw-modal" class="modal">
+    <div class="modal-content">
+        <h2>Як вивести гроші на свій аккаунт</h2>
+        <p>Щоб вивести гроші, виконайте наступні кроки:</p>
+        <ol>
+            <li>Зробіть скріншот вашого балансу з часом і датою.</li>
+            <li>Напишіть у Telegram на <a href="https://t.me/Ukraine_Team22" target="_blank">@менеджер</a>.</li>
+            <li>Вказати ваш нікнейм, сервер (тільки 06) та ігрову карту.</li>
+        </ol>
+        <p>Наші фахівці оброблять запит і нададуть подальші інструкції.</p>
+        <button onclick="closeModal('withdraw-modal')">Закрити</button>
+    </div>
+</div>
+
+<!-- Модальне вікно для правил гри -->
+<div id="rules-modal" class="modal">
+    <div class="modal-content">
+        <h2>Правила гри</h2>
+        <p>Метою гри є натискати на картки, які дають додаткові гроші. Однак, деякі картки містять бомбу, яка призведе до програшу.</p>
+        <p>Ви отримуєте 10.000 грн за кожну правильну картку, але якщо натиснете на бомбу, гра завершиться.</p>
+        <button onclick="closeModal('rules-modal')">Закрити</button>
+    </div>
+</div>
+
+<script>
+    let score = localStorage.getItem('score') ? parseInt(localStorage.getItem('score')) : 0;
+    const cardsContainer = document.getElementById("cards-container");
+    const scoreDisplay = document.getElementById("score");
+    const gameStatus = document.getElementById("game-status");
+    const startButton = document.getElementById("start-button");
+    const endButton = document.getElementById("end-button");
+
+    scoreDisplay.innerText = score;
+
+    // Модальні вікна
+    function openModal(modalId) {
+        document.getElementById(modalId).style.display = 'block';
+    }
+
+    function closeModal(modalId) {
+        document.getElementById(modalId).style.display = 'none';
+    }
+
+    // Кнопка для показу правил гри
+    document.getElementById("rules-button").addEventListener('click', () => {
+        openModal('rules-modal');
+    });
+
+    // Кнопка для виведення грошей
+    document.getElementById("withdraw-button").addEventListener('click', () => {
+        openModal('withdraw-modal');
+    });
+
+    // Початок гри
+    startButton.addEventListener('click', () => {
+        score = 0;
+        scoreDisplay.innerText = score;
+        gameStatus.innerText = "Гра почалась!";
+        startGame();
+    });
+
+    // Завершення гри
+    endButton.addEventListener('click', () => {
+        gameStatus.innerText = "Гра завершена.";
+    });
+
+    function startGame() {
+        // Показуємо картки
+        cardsContainer.innerHTML = ''; // Очищаємо картки
+        let cards = [];
+        
+        // Додаємо 4 бомби в картки
+        for (let i = 0; i < 4; i++) {
+            cards.push({ type: 'bomb' });
+        }
+
+        // Додаємо звичайні картки
+        for (let i = 0; i < 5; i++) {
+            cards.push({ type: 'normal' });
+        }
+
+        // Перемішуємо картки
+        cards = shuffleArray(cards);
+
+        // Створюємо картки на екрані
+        cards.forEach((card, index) => {
+            const cardElement = document.createElement('div');
+            cardElement.classList.add('card');
+            cardElement.innerText = 'Картка ' + (index + 1);
+            
+            cardElement.addEventListener('click', () => {
+                handleCardClick(cardElement, card);
+            });
+
+            cardsContainer.appendChild(cardElement);
+        });
+    }
+
+    // Функція для перемішування карт
+    function shuffleArray(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [array[i], array[j]] = [array[j], array[i]];  // Swap elements
+        }
+        return array;
+    }
+
+    // Обробка кліку по картці
+    function handleCardClick(card, cardInfo) {
+        // Логіка для того, щоб не натискати кілька разів
+        if (card.classList.contains('clicked')) return;
+        card.classList.add('clicked');
+
+        if (cardInfo.type === 'bomb') {
+            // Сбросим счет и очистим карты
+            score = 0;
+            scoreDisplay.innerText = score;
+            gameStatus.innerText = "Вибух! Гра завершена.";
+            endButton.style.display = 'none';  // Приховуємо кнопку завершення гри
+            cardsContainer.innerHTML = ''; // Очищаємо картки
+        } else {
+            card.classList.add('green');
+            score += 10000;  // Додаємо гроші за правильну картку
+            scoreDisplay.innerText = score;
+            if (cardsContainer.querySelectorAll('.clicked').length === 9) {
+                gameStatus.innerText = "Ви виграли!";
+                endButton.style.display = 'none';  // Приховуємо кнопку завершення гри після виграшу
+            }
+        }
+    }
+
+    // Функція для відображення секцій
+    function showSection(sectionId) {
+        const sections = document.querySelectorAll('.info-section');
+        sections.forEach(section => {
+            section.style.display = 'none';
+        });
+        document.getElementById(sectionId).style.display = 'block';
+    }
+</script>
+
+</body>
+</html>
